@@ -1,0 +1,23 @@
+{
+  "name": "terraform-cloudflare-access-github",
+  "version": "1.0.0",
+  "description": "# 🚀 Javascript full-stack 🚀",
+  "main": "index.js",
+  "scripts": {
+    "plan": "terraform plan",
+    "apply": "terraform apply -auto-approve",
+    "deploy": "git add . && git commit -m Build && git push ",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/coding-to-music/terraform-cloudflare-access-github.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/coding-to-music/terraform-cloudflare-access-github/issues"
+  },
+  "homepage": "https://github.com/coding-to-music/terraform-cloudflare-access-github#readme"
+}
