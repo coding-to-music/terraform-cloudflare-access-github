@@ -4,6 +4,8 @@
   "description": "# 🚀 Javascript full-stack 🚀",
   "main": "index.js",
   "scripts": {
+    "init": "terraform init",
+    "import": "terraform import",
     "plan": "terraform plan",
     "apply": "terraform apply -auto-approve",
     "deploy": "git add . && git commit -m Build && git push ",
