@@ -1,9 +1,9 @@
 variable "domain" {
-  default = "example.com"
+  default = var.site_domain
 }
 
 variable "zone_id" {
-  default = <CLOUDFLARE_ZONE_ID>
+  default = data.cloudflare_zones.domain.zones[0].id
 }
 
 resource "cloudflare_access_application" "cf_app" {
