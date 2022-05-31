@@ -16,6 +16,30 @@ https://github.com/cloudflare/cloudflare-docs/blob/production/content/cloudflare
 
 ```
 
+## Errors and messages
+
+```java
+cloudflare_access_application.cf_app: Creating...
+cloudflare_record.www: Creating...
+cloudflare_record.www: Still creating... [10s elapsed]
+cloudflare_record.www: Still creating... [20s elapsed]
+cloudflare_record.www: Still creating... [30s elapsed]
+╷
+│ Error: error creating Access Application for zone "9823b40": access.api.error.application_already_exists (11010)
+│
+│   with cloudflare_access_application.cf_app,
+│   on main.tf line 27, in resource "cloudflare_access_application" "cf_app":
+│   27: resource "cloudflare_access_application" "cf_app" {
+│
+╵
+╷
+│ Error: expected DNS record to not already be present but already exists
+│
+│   with cloudflare_record.www,
+│   on main.tf line 50, in resource "cloudflare_record" "www":
+│   50: resource "cloudflare_record" "www" {
+```
+
 ## GitHub
 
 ```java

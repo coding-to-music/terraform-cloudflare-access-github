@@ -6,6 +6,7 @@
   "scripts": {
     "init": "terraform init",
     "import": "terraform import",
+    "show": "terraform show",
     "plan": "terraform plan",
     "apply": "terraform apply -auto-approve",
     "deploy": "git add . && git commit -m Build && git push ",
