@@ -26,20 +26,20 @@ tf apply -auto-approve
 tf apply -auto-approve
 data.cloudflare_zones.domain: Reading...
 data.cloudflare_zones.domain: Read complete after 1s [id=010561c6841c1d1ab17e671680567a3f]
-aws_s3_bucket.www: Refreshing state... [id=www.all-knowledge.info]
-aws_s3_bucket.site: Refreshing state... [id=all-knowledge.info]
-aws_s3_bucket_acl.www: Refreshing state... [id=www.all-knowledge.info,private]
+aws_s3_bucket.www: Refreshing state... [id=www.mydomain.com]
+aws_s3_bucket.site: Refreshing state... [id=mydomain.com]
+aws_s3_bucket_acl.www: Refreshing state... [id=www.mydomain.com,private]
 cloudflare_record.site_cname: Refreshing state... [id=28bf5e5065954870ddca105fb5fc0eb2]
-aws_s3_bucket_website_configuration.site: Refreshing state... [id=all-knowledge.info]
-aws_s3_bucket_website_configuration.www: Refreshing state... [id=all-knowledge.info]
-aws_s3_bucket_policy.site: Refreshing state... [id=all-knowledge.info]
-aws_s3_bucket_acl.site: Refreshing state... [id=all-knowledge.info,public-read]
-╷
-│ Error: Record does not exist. (81044)
-│
-│   with cloudflare_record.site_cname,
-│   on main.tf line 90, in resource "cloudflare_record" "site_cname":
-│   90: resource "cloudflare_record" "site_cname" {
+aws_s3_bucket_website_configuration.site: Refreshing state... [id=mydomain.com]
+aws_s3_bucket_website_configuration.www: Refreshing state... [id=mydomain.com]
+aws_s3_bucket_policy.site: Refreshing state... [id=mydomain.com]
+aws_s3_bucket_acl.site: Refreshing state... [id=mydomain.com,public-read]
+
+ Error: Record does not exist. (81044)
+
+  with cloudflare_record.site_cname,
+  on main.tf line 90, in resource "cloudflare_record" "site_cname":
+  90: resource "cloudflare_record" "site_cname" {
 ```
 
 ## GitHub
