@@ -19,25 +19,27 @@ https://github.com/cloudflare/cloudflare-docs/blob/production/content/cloudflare
 ## Errors and messages
 
 ```java
-cloudflare_access_application.cf_app: Creating...
-cloudflare_record.www: Creating...
-cloudflare_record.www: Still creating... [10s elapsed]
-cloudflare_record.www: Still creating... [20s elapsed]
-cloudflare_record.www: Still creating... [30s elapsed]
+tf apply -auto-approve
+```
+
+```java
+tf apply -auto-approve
+data.cloudflare_zones.domain: Reading...
+data.cloudflare_zones.domain: Read complete after 1s [id=010561c6841c1d1ab17e671680567a3f]
+aws_s3_bucket.www: Refreshing state... [id=www.all-knowledge.info]
+aws_s3_bucket.site: Refreshing state... [id=all-knowledge.info]
+aws_s3_bucket_acl.www: Refreshing state... [id=www.all-knowledge.info,private]
+cloudflare_record.site_cname: Refreshing state... [id=28bf5e5065954870ddca105fb5fc0eb2]
+aws_s3_bucket_website_configuration.site: Refreshing state... [id=all-knowledge.info]
+aws_s3_bucket_website_configuration.www: Refreshing state... [id=all-knowledge.info]
+aws_s3_bucket_policy.site: Refreshing state... [id=all-knowledge.info]
+aws_s3_bucket_acl.site: Refreshing state... [id=all-knowledge.info,public-read]
 ╷
-│ Error: error creating Access Application for zone "9823b40": access.api.error.application_already_exists (11010)
+│ Error: Record does not exist. (81044)
 │
-│   with cloudflare_access_application.cf_app,
-│   on main.tf line 27, in resource "cloudflare_access_application" "cf_app":
-│   27: resource "cloudflare_access_application" "cf_app" {
-│
-╵
-╷
-│ Error: expected DNS record to not already be present but already exists
-│
-│   with cloudflare_record.www,
-│   on main.tf line 50, in resource "cloudflare_record" "www":
-│   50: resource "cloudflare_record" "www" {
+│   with cloudflare_record.site_cname,
+│   on main.tf line 90, in resource "cloudflare_record" "site_cname":
+│   90: resource "cloudflare_record" "site_cname" {
 ```
 
 ## GitHub
