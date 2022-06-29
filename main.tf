@@ -1,34 +1,84 @@
-provider "cloudflare" {}
-
 terraform {
-  required_providers {
-    cloudflare = {
-      source = "cloudflare/cloudflare"
-      version = "~> 3.0"
+    required_providers {
+        cloudflare = {
+            source = "cloudflare/cloudflare"
+        }
+        github = {
+            source  = "integrations/github"
+          version = "~> 4.0"
+        }
     }
+}
+
+
+provider "cloudflare" {
+# api_token  = var.cloudflare_api_token  ## Commented out as we are using an environment var
+}
+
+provider "aws" {
+  region = var.aws_region
+}
+
+# provider "cloudflare" {}
+
+resource "aws_s3_bucket" "site" {
+  bucket = var.site_domain
+}
+
+resource "aws_s3_bucket_website_configuration" "site" {
+  bucket = aws_s3_bucket.site.id
+
+  index_document {
+    suffix = "index.html"
+  }
+
+  error_document {
+    key = "error.html"
   }
 }
 
-# variable "domain" {
-#   default = var.site_domain
-# }
+resource "aws_s3_bucket_acl" "site" {
+  bucket = aws_s3_bucket.site.id
 
-# variable "zone_id" {
-#   default = data.cloudflare_zones.domain.zones[0].id
-# }
+  acl = "public-read"
+}
 
-# resource "cloudflare_access_application" "cf_app" {
-#   zone_id          = var.zone_id
-#   name             = "My Example App"
-#   domain           = var.domain
-#   session_duration = "24h"
-# }
+resource "aws_s3_bucket_policy" "site" {
+  bucket = aws_s3_bucket.site.id
 
-resource "cloudflare_access_application" "cf_app" {
-  zone_id          = data.cloudflare_zones.domain.zones[0].id
-  name             = "My Example App"
-  domain           = var.site_domain
-  session_duration = "24h"
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Sid       = "PublicReadGetObject"
+        Effect    = "Allow"
+        Principal = "*"
+        Action    = "s3:GetObject"
+        Resource = [
+          aws_s3_bucket.site.arn,
+          "${aws_s3_bucket.site.arn}/*",
+        ]
+      },
+    ]
+  })
+}
+
+resource "aws_s3_bucket" "www" {
+  bucket = "www.${var.site_domain}"
+}
+
+resource "aws_s3_bucket_acl" "www" {
+  bucket = aws_s3_bucket.www.id
+
+  acl = "private"
+}
+
+resource "aws_s3_bucket_website_configuration" "www" {
+  bucket = aws_s3_bucket.site.id
+
+  redirect_all_requests_to {
+    host_name = var.site_domain
+  }
 }
 
 data "cloudflare_zones" "domain" {
@@ -37,15 +87,15 @@ data "cloudflare_zones" "domain" {
   }
 }
 
-# resource "cloudflare_record" "site_cname" {
-#   zone_id = data.cloudflare_zones.domain.zones[0].id
-#   name    = var.site_domain
-#   value   = aws_s3_bucket.site.website_endpoint
-#   type    = "CNAME"
+resource "cloudflare_record" "site_cname" {
+  zone_id = data.cloudflare_zones.domain.zones[0].id
+  name    = var.site_domain
+  value   = aws_s3_bucket.site.website_endpoint
+  type    = "CNAME"
 
-#   ttl     = 1
-#   proxied = true
-# }
+  ttl     = 1
+  proxied = true
+}
 
 resource "cloudflare_record" "www" {
   zone_id = data.cloudflare_zones.domain.zones[0].id
@@ -55,5 +105,27 @@ resource "cloudflare_record" "www" {
 
   ttl     = 1
   proxied = true
+}
+
+resource "cloudflare_page_rule" "redirect-to-learn" {
+  zone_id = data.cloudflare_zones.domain.zones[0].id
+  target  = "${var.site_domain}/learn"
+  actions {
+    forwarding_url {
+      status_code = 302
+      url         = "https://learn.hashicorp.com/terraform"
+    }
+  }
+}
+
+resource "cloudflare_page_rule" "redirect-to-hashicorp" {
+  zone_id = data.cloudflare_zones.domain.zones[0].id
+  target  = "${var.site_domain}/hello"
+  actions {
+    forwarding_url {
+      status_code = 302
+      url         = "https://hashicorp.com"
+    }
+  }
 }
 

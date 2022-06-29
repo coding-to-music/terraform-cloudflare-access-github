@@ -1,0 +1,27 @@
+terraform {
+    required_providers {
+        cloudflare = {
+            source = "cloudflare/cloudflare"
+        }
+        github = {
+            source  = "integrations/github"
+          version = "~> 4.0"
+        }
+    }
+}
+
+
+provider "cloudflare" {
+# api_token  = var.cloudflare_api_token  ## Commented out as we are using an environment var
+}
+
+resource "cloudflare_record" "terraform_managed_resource_98a2614bd1e726c8955c3da9a5b7a463" {
+  name    = "www"
+  proxied = true
+  ttl     = 1
+  type    = "CNAME"
+  value   = "all-knowledge.info"
+  zone_id = data.cloudflare_zones.domain.zones[0].id
+}
+
+  # zone_id = "9823b40abe9fb86d32986a9909a32865"
