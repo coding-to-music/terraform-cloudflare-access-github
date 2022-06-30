@@ -42,6 +42,44 @@ aws_s3_bucket_acl.site: Refreshing state... [id=mydomain.com,public-read]
   90: resource "cloudflare_record" "site_cname" {
 ```
 
+## Clear out the missing resource from terraform state, it does not exist
+
+```
+terraform state rm 'cloudflare_record.site_cname'
+```
+
+Output:
+
+```
+Removed cloudflare_record.site_cname
+Successfully removed 1 resource instance(s).
+```
+
+## Try it again
+
+```
+tf apply -auto-approve
+```
+
+Output:
+
+```
+╷
+│ Error: failed to create page rule: Page Rule validation failed: See messages for details. (1004)
+│
+│   with cloudflare_page_rule.redirect-to-learn,
+│   on main.tf line 110, in resource "cloudflare_page_rule" "redirect-to-learn":
+│  110: resource "cloudflare_page_rule" "redirect-to-learn" {
+│
+╵
+╷
+│ Error: failed to create page rule: Page Rule validation failed: See messages for details. (1004)
+│
+│   with cloudflare_page_rule.redirect-to-hashicorp,
+│   on main.tf line 121, in resource "cloudflare_page_rule" "redirect-to-hashicorp":
+│  121: resource "cloudflare_page_rule" "redirect-to-hashicorp" {
+```
+
 ## GitHub
 
 ```java
