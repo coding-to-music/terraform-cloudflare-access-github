@@ -1,2 +1,16 @@
 aws_region         = "us-east-1"
-site_domain        = ""
+
+# Cloudflare Configuration
+cloudflare_domain = ""
+cloudflare_account_id = ""
+cloudflare_tunnel_secret = "Some-very-secret-passphrase-you-only-know"
+cloudflare_cname_record = "grafana"
+cloudflare_ssh_cname_record = "ssh-browser"
+
+# Used by Terraform to manage your Cloudflare resources
+cloudflare_api_token = ""
+# Used by the Prometheus Exporter to pull your analytics from Cloudflare GraphQL
+cloudflare_analytics_api_token = ""
+
+# Authorized user for Cloudflare Access
+user_email = ""
