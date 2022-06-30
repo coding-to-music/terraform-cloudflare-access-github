@@ -45,6 +45,9 @@ variable "cloudflare_api_token" {}
 variable "cloudflare_analytics_api_token" {}
 variable "user_email" {}
 
+variable "github_client_id" {}
+variable "github_client_secret" {}
+
 variable "aws_region" {
   type        = string
   description = "The AWS region to put the bucket into"

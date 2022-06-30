@@ -115,9 +115,9 @@ resource "cloudflare_access_application" "cf_app" {
 }
 
 resource "cloudflare_access_identity_provider" "github_oauth" {
-  # account_id = <CLOUDFLARE_ACCOUNT_ID>
   name       = "GitHub OAuth"
   type       = "github"
+  zone_id    = data.cloudflare_zones.domain.zones[0].id
   config {
     client_id     = var.github_client_id
     client_secret = var.github_client_secret
