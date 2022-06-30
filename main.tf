@@ -114,25 +114,15 @@ resource "cloudflare_access_application" "cf_app" {
   session_duration = "24h"
 }
 
-# resource "cloudflare_access_identity_provider" "github_oauth" {
-#   account_id = <CLOUDFLARE_ACCOUNT_ID>
-#   name       = "GitHub OAuth"
-#   type       = "github"
-#   config {
-#     client_id     = <GITHUB_CLIENT_ID>
-#     client_secret = <GITHUB_CLIENT_SECRET>
-#   }
-# }
-
-# resource "cloudflare_access_identity_provider" "github_oauth" {
-#   account_id = <CLOUDFLARE_ACCOUNT_ID>
-#   name       = "GitHub OAuth"
-#   type       = "github"
-#   config {
-#     client_id     = <GITHUB_CLIENT_ID>
-#     client_secret = <GITHUB_CLIENT_SECRET>
-#   }
-# }
+resource "cloudflare_access_identity_provider" "github_oauth" {
+  # account_id = <CLOUDFLARE_ACCOUNT_ID>
+  name       = "GitHub OAuth"
+  type       = "github"
+  config {
+    client_id     = var.github_client_id
+    client_secret = var.github_client_secret
+  }
+}
 
 resource "cloudflare_access_policy" "cf_policy" {
   application_id = cloudflare_access_application.cf_app.id
